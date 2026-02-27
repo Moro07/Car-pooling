@@ -22,11 +22,11 @@ AND r.idRichiesta = 1
 
 ## 3° query:
 ```
-SELECT p.nome, p.cognome, f.recensione, f.voto
-FROM viaggio v, autista a, passeggero p, richiesta r, feedbackpas f
-WHERE a.idAutista = v.idAutista 
-AND r.idViaggio = v.idViaggio
+SELECT p.idPasseggero, p.cognome, p.nome, AVG(f.voto) AS voto_medio
+FROM passeggero p, feedbackpas f, richiesta r
+WHERE p.idPasseggero = f.idPasseggero
 AND p.idPasseggero = r.idPasseggero
-AND f.idPasseggero = p.idPasseggero
-AND v.idViaggio = 1
+AND r.idViaggio = 1
+GROUP BY p.idPasseggero
+HAVING voto_medio > 3;
 ```
